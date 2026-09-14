@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as WhatIsTheSpiderVerseRouteImport } from './routes/what-is-the-spider-verse'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WhatIsTheSpiderVerseRoute = WhatIsTheSpiderVerseRouteImport.update({
+  id: '/what-is-the-spider-verse',
+  path: '/what-is-the-spider-verse',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/what-is-the-spider-verse': typeof WhatIsTheSpiderVerseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/what-is-the-spider-verse': typeof WhatIsTheSpiderVerseRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/what-is-the-spider-verse': typeof WhatIsTheSpiderVerseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/what-is-the-spider-verse'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/what-is-the-spider-verse'
+  id: '__root__' | '/' | '/what-is-the-spider-verse'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  WhatIsTheSpiderVerseRoute: typeof WhatIsTheSpiderVerseRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/what-is-the-spider-verse': {
+      id: '/what-is-the-spider-verse'
+      path: '/what-is-the-spider-verse'
+      fullPath: '/what-is-the-spider-verse'
+      preLoaderRoute: typeof WhatIsTheSpiderVerseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  WhatIsTheSpiderVerseRoute: WhatIsTheSpiderVerseRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
