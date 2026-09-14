@@ -10,33 +10,89 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TimelineRouteImport } from './routes/timeline'
+import { Route as WhatIsTheSpiderVerseRouteImport } from './routes/what-is-the-spider-verse'
+import { Route as DirectoryIndexRouteImport } from './routes/directory.index'
+import { Route as DirectoryCharacterIdRouteImport } from './routes/directory.$characterId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TimelineRoute = TimelineRouteImport.update({
+  id: '/timeline',
+  path: '/timeline',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WhatIsTheSpiderVerseRoute = WhatIsTheSpiderVerseRouteImport.update({
+  id: '/what-is-the-spider-verse',
+  path: '/what-is-the-spider-verse',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DirectoryIndexRoute = DirectoryIndexRouteImport.update({
+  id: '/directory/',
+  path: '/directory/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DirectoryCharacterIdRoute = DirectoryCharacterIdRouteImport.update({
+  id: '/directory/$characterId',
+  path: '/directory/$characterId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/timeline': typeof TimelineRoute
+  '/what-is-the-spider-verse': typeof WhatIsTheSpiderVerseRoute
+  '/directory/$characterId': typeof DirectoryCharacterIdRoute
+  '/directory/': typeof DirectoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/timeline': typeof TimelineRoute
+  '/what-is-the-spider-verse': typeof WhatIsTheSpiderVerseRoute
+  '/directory/$characterId': typeof DirectoryCharacterIdRoute
+  '/directory': typeof DirectoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/timeline': typeof TimelineRoute
+  '/what-is-the-spider-verse': typeof WhatIsTheSpiderVerseRoute
+  '/directory/$characterId': typeof DirectoryCharacterIdRoute
+  '/directory/': typeof DirectoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/timeline'
+    | '/what-is-the-spider-verse'
+    | '/directory/$characterId'
+    | '/directory/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/timeline'
+    | '/what-is-the-spider-verse'
+    | '/directory/$characterId'
+    | '/directory'
+  id:
+    | '__root__'
+    | '/'
+    | '/timeline'
+    | '/what-is-the-spider-verse'
+    | '/directory/$characterId'
+    | '/directory/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TimelineRoute: typeof TimelineRoute
+  WhatIsTheSpiderVerseRoute: typeof WhatIsTheSpiderVerseRoute
+  DirectoryCharacterIdRoute: typeof DirectoryCharacterIdRoute
+  DirectoryIndexRoute: typeof DirectoryIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +104,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/timeline': {
+      id: '/timeline'
+      path: '/timeline'
+      fullPath: '/timeline'
+      preLoaderRoute: typeof TimelineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/what-is-the-spider-verse': {
+      id: '/what-is-the-spider-verse'
+      path: '/what-is-the-spider-verse'
+      fullPath: '/what-is-the-spider-verse'
+      preLoaderRoute: typeof WhatIsTheSpiderVerseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/directory/': {
+      id: '/directory/'
+      path: '/directory'
+      fullPath: '/directory/'
+      preLoaderRoute: typeof DirectoryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/directory/$characterId': {
+      id: '/directory/$characterId'
+      path: '/directory/$characterId'
+      fullPath: '/directory/$characterId'
+      preLoaderRoute: typeof DirectoryCharacterIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TimelineRoute: TimelineRoute,
+  WhatIsTheSpiderVerseRoute: WhatIsTheSpiderVerseRoute,
+  DirectoryCharacterIdRoute: DirectoryCharacterIdRoute,
+  DirectoryIndexRoute: DirectoryIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
